@@ -7,35 +7,50 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Spotify Recently Played</title>
     <link href="https://fonts.googleapis.com/css?family=Mitr" rel="stylesheet">
-<link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
-<link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+    <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+    <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
     <style>
         body {
             margin: 0;
             font-family: 'Mitr', sans-serif;
         }
+
         img {
             width: 100px
         }
+
         p {
             margin-block-start: 0;
             margin-block-end: 0;
         }
-        tr > td:nth-child(1) {
+
+        tr>td:nth-child(1) {
             padding: 0 15px 0 0;
         }
+
         td {
-            padding:0;
+            padding: 0;
         }
+
         .button {
-    background-color: #1db954;
-    border: 0.1rem solid #1db954;
-    font-size: large;
-}
-.button:focus, .button:hover, button:focus, button:hover, input[type='button']:focus, input[type='button']:hover, input[type='reset']:focus, input[type='reset']:hover, input[type='submit']:focus, input[type='submit']:hover {
-    background-color: #191414;
-    border-color: #191414;
-}
+            background-color: #1db954;
+            border: 0.1rem solid #1db954;
+            font-size: large;
+        }
+
+        .button:focus,
+        .button:hover,
+        button:focus,
+        button:hover,
+        input[type='button']:focus,
+        input[type='button']:hover,
+        input[type='reset']:focus,
+        input[type='reset']:hover,
+        input[type='submit']:focus,
+        input[type='submit']:hover {
+            background-color: #191414;
+            border-color: #191414;
+        }
     </style>
 </head>
 
@@ -61,7 +76,7 @@
             console.log(location.hash)
             console.log(access_token.token)
             location.hash = ''
-            axios.get('https://api.spotify.com/v1/me/player/recently-played', {
+            axios.get('https://api.spotify.com/v1/me/player/recently-played?limit=50', {
                     headers: {
                         'Authorization': 'Bearer ' + access_token.token
                     }
@@ -69,7 +84,7 @@
                 .then(function (response) {
                     console.log(response);
                     response.data.items.forEach(function (list) {
-                        console.log(list)
+                        //console.log(list)
                         var tr = document.createElement("tr")
                         var td1 = document.createElement("td")
                         var td2 = document.createElement("td")
@@ -97,17 +112,20 @@
                         tr.append(td2)
                         tr.append(td3)
                         tr.append(td4)
+                        tr.onclick = function () {
+                            location.href = list.track.uri
+                        }
                         document.querySelector('table').append(tr)
                     })
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
-                .then(function () {
-                    // always executed
-                });
+                .then(function () {});
         }
-        document.querySelector('a.button').onclick = function(){location.replace('../')}
+        document.querySelector('a.button').onclick = function () {
+            location.replace('../')
+        }
     </script>
 </body>
 
