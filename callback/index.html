@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Spotify Last Listen</title>
+    <link href="https://fonts.googleapis.com/css?family=Mitr" rel="stylesheet">
+<link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+<link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Mitr', sans-serif;
+        }
+        img {
+            width: 100px
+        }
+        p {
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+        tr > td:nth-child(1) {
+            padding: 0 15px 0 0;
+        }
+        td {
+            padding:0;
+        }
+        .button {
+    background-color: #1db954;
+    border: 0.1rem solid #1db954;
+    font-size: large;
+}
+.button:focus, .button:hover, button:focus, button:hover, input[type='button']:focus, input[type='button']:hover, input[type='reset']:focus, input[type='reset']:hover, input[type='submit']:focus, input[type='submit']:hover {
+    background-color: #191414;
+    border-color: #191414;
+}
+    </style>
+</head>
+
+<body>
+    <table style="width:100%">
+        <tr>
+            <th width="100px"></th>
+            <th>Song</th>
+            <th>Artist</th>
+        </tr>
+    </table>
+    <a class="button">กลับไปหน้าแรก</a>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        if (location.hash != null && location.hash != "" && location.hash != undefined) {
+            var access_token = JSON.parse(JSON.stringify({
+                token: location.hash.split('#access_token=')[1].split('&token_type=')[0],
+                token_type: location.hash.split('#access_token=')[1].split('&token_type=')[1].split(
+                    '&expires_in')[0]
+            }))
+            console.log(location.hash)
+            console.log(access_token.token)
+            location.hash = ''
+            axios.get('https://api.spotify.com/v1/me/player/recently-played', {
+                    headers: {
+                        'Authorization': 'Bearer ' + access_token.token
+                    }
+                })
+                .then(function (response) {
+                    console.log(response);
+                    response.data.items.forEach(function (list) {
+                        console.log(list)
+                        var tr = document.createElement("tr")
+                        var td1 = document.createElement("td")
+                        var td2 = document.createElement("td")
+                        var td3 = document.createElement("td")
+                        var img1 = document.createElement("img")
+                        var p1 = document.createElement("p")
+                        var p2 = document.createElement("p")
+                        img1.src = list.track.album.images[0].url
+                        td1.append(img1)
+                        p1.append(list.track.name)
+                        td2.append(p1)
+                        p2.append(list.track.artists[0].name)
+                        td3.append(p2)
+                        tr.append(td1)
+                        tr.append(td2)
+                        tr.append(td3)
+                        document.querySelector('table').append(tr)
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .then(function () {
+                    // always executed
+                });
+        }
+        document.querySelector('a.button').onclick = function(){location.replace('../')}
+    </script>
+</body>
+
+</html>

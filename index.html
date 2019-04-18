@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Mitr" rel="stylesheet">
+<link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+<link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+<style>
+body {
+    margin: 0;
+            font-family: 'Mitr', sans-serif;
+    text-align: center
+}
+.button {
+    background-color: #1db954;
+    border: 0.1rem solid #1db954;
+    font-size: large;
+}
+.button:focus, .button:hover, button:focus, button:hover, input[type='button']:focus, input[type='button']:hover, input[type='reset']:focus, input[type='reset']:hover, input[type='submit']:focus, input[type='submit']:hover {
+    background-color: #191414;
+    border-color: #191414;
+}
+</style>
+</head>
+<body>
+    <h1>Spotify Recently Played</h1>
+    <h4>เพลงที่ฟังล่าสุดบน Spotify</h4>
+    <a class="button">คลิ๊กเพื่อล็อกอิน</a>
+    <script>
+        document.querySelector('a.button').onclick = function(){location.replace('https://accounts.spotify.com/authorize?client_id=a0150944943f4156a50f4ebd03b88466&response_type=token&redirect_uri=https%3A%2F%2Fhexadi.github.io%2Fspotifyrecentplay%2Fcallback&scope=user-read-recently-played')}
+    </script>
+</body>
+</html>
