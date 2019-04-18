@@ -45,10 +45,12 @@
             <th width="100px"></th>
             <th>Song</th>
             <th>Artist</th>
+            <th>Time</th>
         </tr>
     </table>
     <a class="button">กลับไปหน้าแรก</a>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.8.12/dayjs.min.js"></script>
     <script>
         if (location.hash != null && location.hash != "" && location.hash != undefined) {
             var access_token = JSON.parse(JSON.stringify({
@@ -72,18 +74,29 @@
                         var td1 = document.createElement("td")
                         var td2 = document.createElement("td")
                         var td3 = document.createElement("td")
+                        var td4 = document.createElement("td")
                         var img1 = document.createElement("img")
                         var p1 = document.createElement("p")
                         var p2 = document.createElement("p")
+                        var p3 = document.createElement("p")
                         img1.src = list.track.album.images[0].url
                         td1.append(img1)
                         p1.append(list.track.name)
                         td2.append(p1)
                         p2.append(list.track.artists[0].name)
                         td3.append(p2)
+                        var x
+                        if (dayjs(list.played_at).format('YYYYMMDD') == dayjs().format('YYYYMMDD')) {
+                            x = dayjs(list.played_at).format('HH:mm')
+                        } else {
+                            x = dayjs(list.played_at).format('ddd HH:mm')
+                        }
+                        p3.append(x)
+                        td4.append(p3)
                         tr.append(td1)
                         tr.append(td2)
                         tr.append(td3)
+                        tr.append(td4)
                         document.querySelector('table').append(tr)
                     })
                 })
