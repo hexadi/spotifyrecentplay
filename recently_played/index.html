@@ -147,7 +147,7 @@
             .catch(function (error) {
                 console.log(error);
                 if (error.response.status === 401) {
-                    location.replace('https://accounts.spotify.com/authorize?client_id=a0150944943f4156a50f4ebd03b88466&response_type=token&redirect_uri=http%3A%2F%2Flocalhost%2Fcallback&scope=user-read-recently-played')
+                    location.replace('https://accounts.spotify.com/authorize?client_id=a0150944943f4156a50f4ebd03b88466&response_type=token&redirect_uri=https%3A%2F%2Fhexadi.github.io%2Fspotifyrecentplay%2Fcallback&scope=user-read-recently-played')
                 }
             })
             .then(function () {
